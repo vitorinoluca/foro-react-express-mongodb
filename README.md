@@ -31,4 +31,4 @@ Este proyecto es una plataforma web desarrollada con el stack MERN que permite a
     - MongoDB Atlas
  
 ## Link al deploy 🚀
- - https://foro-lucavitorino.vercel.app
+ - https://forum-vitorinoluca.vercel.app
