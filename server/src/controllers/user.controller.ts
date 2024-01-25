@@ -79,10 +79,12 @@ export const logoutController = async (
   _req: Request,
   res: Response,
 ): Promise<void> => {
-  res.cookie('authToken', '', {
-    sameSite: 'none',
-    secure: true,
-  });
+  res
+    .cookie('authToken', '', {
+      sameSite: 'none',
+      secure: true,
+    })
+    .end();
 };
 
 export const deleteUserController = async (
