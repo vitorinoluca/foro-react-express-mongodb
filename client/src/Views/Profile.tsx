@@ -22,6 +22,7 @@ export const Profile: React.FC = () => {
   const [messages, setMessages] = useState([])
   const [img, setImg] = useState<string>(currentUser?.img || '')
   const [emailError, setEmailError] = useState('')
+  const [openModal, setOpenModal] = useState(false)
 
   const [loading, setLoading] = useState(false)
 
@@ -152,6 +153,64 @@ export const Profile: React.FC = () => {
             <Link className='w-full border py-1 text-center' to='/'>
               Volver
             </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                setOpenModal(!openModal)
+              }}
+              className='border border-red-500 py-1 text-center text-red-500'
+            >
+              Eliminar cuenta
+            </button>
+            {openModal && (
+              <div className='fixed left-0 top-0 flex h-screen w-full items-center justify-center'>
+                <div
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenModal(!openModal)
+                  }}
+                  className='h-screen w-full bg-black opacity-50'
+                />
+                <div className='absolute flex h-56 flex-col justify-around bg-zinc-950 p-4'>
+                  <div className='flex flex-col gap-2 text-center'>
+                    <h2 className='text-2xl font-semibold'>
+                      Estas seguro que quieres eliminar tu cuenta?
+                    </h2>
+                    <p className='text-zinc-400'>
+                      También se eliminarán todos tus mensajes
+                    </p>
+                  </div>
+                  <div className='flex items-center justify-center gap-1'>
+                    <button
+                      onClick={async (e) => {
+                        e.preventDefault()
+                        const res = await fetch(`${BASE_URL}/delete`, {
+                          method: 'DELETE',
+                          headers: { 'Content-Type': 'application/json' },
+                          credentials: 'include',
+                        })
+                        console.log(await res.json())
+                        if (res.ok) {
+                          window.location.href = '/'
+                        }
+                      }}
+                      className='w-full border p-1.5'
+                    >
+                      Si
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setOpenModal(!openModal)
+                      }}
+                      className='w-full border p-1.5'
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </form>

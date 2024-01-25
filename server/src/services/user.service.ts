@@ -248,3 +248,36 @@ export const updateUserInfoService = async (
     };
   }
 };
+
+export const deleteUserService = async (
+  authToken: string,
+): Promise<ServicesResponse> => {
+  try {
+    const { userId } = jwt.verify(authToken, JWT_SECRET_KEY) as {
+      userId: string;
+    };
+    const userFound = await UserModel.findById(userId);
+
+    if (userFound == null) {
+      return {
+        success: false,
+        statusCode: HttpStatusCode.NOT_FOUND,
+        msg: ERRORS_MSGS.USER_NOT_FOUND,
+      };
+    }
+    await MessageModel.deleteMany({ user: userFound.id });
+
+    await userFound.deleteOne();
+    return {
+      success: true,
+      statusCode: HttpStatusCode.OK,
+      msg: SUCCESS_MSGS.USER_DELETED,
+    };
+  } catch {
+    return {
+      success: false,
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+      msg: ERRORS_MSGS.INTERNAL_SERVER_ERROR,
+    };
+  }
+};

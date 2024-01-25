@@ -21,4 +21,5 @@ export const SUCCESS_MSGS = {
   USER_INFO_UPDATED: 'Se actualizó la informacion del usuario exitosamente.',
   MESSAGE_SENT: 'El mensaje se envió exitosamente.',
   REACTION_UPDATED: 'La reacción se guardó exitosamente.',
+  USER_DELETED: 'El usuario ha sido eliminado correctamente.',
 };

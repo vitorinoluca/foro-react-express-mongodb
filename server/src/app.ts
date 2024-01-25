@@ -10,6 +10,7 @@ export const app = express();
 app.use(
   cors({
     origin: FRONTEND_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }),
 );

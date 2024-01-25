@@ -1,11 +1,12 @@
 import type { Request, Response } from 'express';
 import {
+  deleteUserService,
   getUserInfoService,
   loginService,
   registerNameService,
   registerService,
   updateUserInfoService,
-} from '../services/auth.service';
+} from '../services/user.service';
 
 export const loginController = async (
   req: Request,
@@ -80,4 +81,14 @@ export const logoutController = async (
   res: Response,
 ): Promise<void> => {
   res.clearCookie('authToken').end();
+};
+
+export const deleteUserController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const { authToken } = req.cookies;
+  const { success, statusCode, msg } = await deleteUserService(authToken);
+
+  res.status(statusCode).json({ success, msg });
 };
