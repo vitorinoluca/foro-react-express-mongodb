@@ -21,7 +21,6 @@ export const loginController = async (
     res.cookie('authToken', token, {
       sameSite: 'none',
       secure: true,
-      httpOnly: false,
     });
   }
   res.status(statusCode).json({ success, msg });
@@ -80,7 +79,10 @@ export const logoutController = async (
   _req: Request,
   res: Response,
 ): Promise<void> => {
-  res.clearCookie('authToken').end();
+  res.cookie('authToken', '', {
+    sameSite: 'none',
+    secure: true,
+  });
 };
 
 export const deleteUserController = async (
